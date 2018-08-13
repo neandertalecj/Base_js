@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>test 1</title>
+		<title>base</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<style>
 			
@@ -24,9 +24,9 @@
 		<input type="text" id="pass">
 		<hr>
 
-		<div id="one"></div>
-		<!--  -->
-		<did id="target"></did>
+		<div id="one"></div>    
+		<!--dfgg-->
+		<div id="target"></div>
 
 
 	</body>
@@ -78,18 +78,98 @@
 		
 		document.getElementById('pass').addEventListener('keyup', replaceSymbol);
 	// --------------------------------------------------------------------------------
-	// --------------------------------------------------------------------------------
-	function nextElement(el) {
-		if (el.nodeType !== 1){
-			el = nextElement(el.nextSibling);
-			console.log('2 ' + el);
+	// --------------A closure and recursion-------------------------------------------
+		var obj = {
+			user: {
+				name: 'Petro',
+				phones: [
+					'4576542588',
+					'0874357887'
+				]
+			},
+			// shop: {
+
+			// }
 		}
-		return el;
-	}
+
+		console.log(obj.user.phones[0]); // 4576542588
+
+		var arr = [
+			[1,2,3],
+			[4, [44, 33, 55], 6],
+			[7,8,9]
+		]
+
+		console.log(arr[1][1][0]); // 44
+
+		//----------------
+		function fun1(a, b) {
+			if (b === undefined) b = 10;
+			console.log(a + b);
+		}
+		fun1(3);     // 13
+		fun1(3, 8);  // 11
+		//----------------
+		function fun2() {
+			console.log(arguments);
+		}
+		fun2(52, 3);              // (2) [52, 3, callee: ƒ, Symbol(Symbol.iterator): ƒ]
+		fun2('petro', ['h', 'k']);// (2) ["petro", Array(2),...
+		
+		//-------A closure ---------
+		function fun3(a) {
+			console.log(a);
+		}
+		function fun4() {
+			var a = 32;
+			fun3(a);
+		}
+		fun4();
+		//or so
+		var a = 0;
+		function fun4() {
+			a = 32;
+			function fun3(a) {
+				console.log(a);
+			}
+			fun3(a);
+		}
+		fun4();
+		//-------good example of closure
+		function sayHello(name){
+			var a = 3;
+			var b = 5;
+			return function() {
+				return a + b;
+			}
+		}
+		window.onload = function() {
+			var user = sayHello(user);
+			console.log(user())
+		}
+
+		// --------------
+		// -------Recursion--------	
+		function nextElement(el) {
+			if (el.nodeType !== 1){
+				console.log(el);
+				el = nextElement(el.nextSibling);
+				console.log(el);
+			}
+			return el;
+		}
 
 	var test = nextElement(document.getElementById('one').nextSibling);
 	// console.log(test);
 	console.log(test.getAttribute('id'));
+	//RESULT in console:
+			// #text
+			// <!--dfgg-->
+			// #text
+			// <div id="target"></div>  - ?
+			// <div id="target"></div>
+			// <div id="target"></div>
+			// target
 
 	
 	</script>
