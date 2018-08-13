@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>test 1</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<style>
+			
+			body{
+				margin: 40px;
+			}
+			input{
+				outline: none;
+
+			}
+			
+			
+			
+		</style>
+	</head>
+	<body>
+		<button>Generate</button> <br> <br>
+		<output></output>
+		<hr>
+		<input type="text" id="pass">
+		<hr>
+
+		<div id="one"></div>
+		<!--  -->
+		<did id="target"></did>
+
+
+	</body>
+
+	<script>
+	// --------------------------------------------------------------------------------
+	// ----------------Object Math-----------------------------------------------------
+		//Math.min()
+		//Math.max()
+		//Math.round()  .floor  .cell
+		//Math.random()
+		function getR(min, max) {
+			return Math.random() * (max - min) + min;  //javascript.ru/math
+		}
+		// -----------Generate Password-----------------------
+		var passwordParts = ['a', 'b', 'c', '_', '&', 'g', 'd', 't', 'j'];
+		var lengthParts = 8;
+
+		function generatePassword() {
+			var str = '';
+			for (var i=0; i < lengthParts - 1; i++) {
+				var n = getRandomNum(0, passwordParts.length - 1);
+				str = str + passwordParts[n];
+			}
+			showPassword(str);
+		}
+
+		function showPassword(string) {
+			document.querySelector('output').innerHTML = string;
+		}
+
+		function getRandomNum(min, max) {
+			return Math.floor(Math.random() * (max - min +1)) + min;  // +1 на випадок нуля
+		}
+
+		document.querySelector('button').addEventListener('click', generatePassword);
+
+		//-----------replace Symbol-------------------------------------------------
+		var origPass = '';
+
+		function replaceSymbol(){
+			var str = this.value;
+			origPass += str.charAt(str.length-1);
+			str = str.slice(0, -1);
+			var n = getRandomNum(0, passwordParts.length-1);
+			this.value = str + passwordParts[n];
+			console.log(origPass);
+		}
+		
+		document.getElementById('pass').addEventListener('keyup', replaceSymbol);
+	// --------------------------------------------------------------------------------
+	// --------------------------------------------------------------------------------
+	function nextElement(el) {
+		if (el.nodeType !== 1){
+			el = nextElement(el.nextSibling);
+			console.log('2 ' + el);
+		}
+		return el;
+	}
+
+	var test = nextElement(document.getElementById('one').nextSibling);
+	// console.log(test);
+	console.log(test.getAttribute('id'));
+
+	
+	</script>
+</html>
